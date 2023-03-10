@@ -11,14 +11,14 @@ import (
 )
 
 func main() {
-	fmt.Println("Specify board dimensions and the number of black holes:")
-	w, err := ReadUserInputInt("Board Width:")
+	fmt.Println("Specify board dimensions and the number of black holes")
+	w, err := ReadUserInputInt(fmt.Sprintf("Board Width (max value - %d):", game.MaxBoardW))
 	if err != nil {
 		fmt.Println("Error: ", err)
 		return
 	}
 
-	h, err := ReadUserInputInt("Board Height:")
+	h, err := ReadUserInputInt(fmt.Sprintf("Board Height (max value - %d):", game.MaxBoardH))
 	if err != nil {
 		fmt.Println("Error: ", err)
 		return
@@ -38,37 +38,39 @@ func main() {
 	}
 
 	for g.GetState() == game.Ongoing {
-		drawBoard(g.GetBoard(), false)
+		DrawBoard(g.GetBoard(), false)
 		fmt.Println("Make next turn")
 
-		x, err := ReadUserInputInt("Enter cell x coordinate: ")
+		x, err := ReadUserInputInt("Enter cell x coordinate (left-to-right, 0-based):")
 		if err != nil {
 			fmt.Println("Error: ", err)
 			return
 		}
 
-		y, err := ReadUserInputInt("Enter cell y coordinate: ")
+		y, err := ReadUserInputInt("Enter cell y coordinate (top-to-bottom, 0-based):")
 		if err != nil {
 			fmt.Println("Error: ", err)
 			return
 		}
 
-		state, err := g.MakeTurn(x, y)
+		_, err = g.MakeTurn(x, y)
 		if err != nil {
 			fmt.Println("Error! ", err)
-			break
-		}
-
-		if state == game.Lost {
-			fmt.Println("You've lost!")
-			break
-		} else if state == game.Won {
-			fmt.Println("You've won")
-			break
+			continue
 		}
 	}
 
-	drawBoard(g.GetBoard(), true)
+	DrawBoard(g.GetBoard(), true)
+
+	state := g.GetState()
+
+	if state == game.Lost {
+		fmt.Println("You've lost!")
+	} else if state == game.Won {
+		fmt.Println("You've won!")
+	} else {
+		fmt.Println("Error: Invalid game state")
+	}
 }
 
 func ReadUserInputInt(prompt string) (int, error) {
@@ -89,7 +91,7 @@ func ReadUserInputInt(prompt string) (int, error) {
 	return int(v), nil
 }
 
-func drawBoard(board [][]game.Cell, showBombs bool) {
+func DrawBoard(board [][]game.Cell, showBombs bool) {
 	fmt.Println()
 	fmt.Print(" ")
 	for range board {
