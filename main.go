@@ -100,14 +100,14 @@ func DrawBoard(board [][]game.Cell, showBombs bool) {
 
 	fmt.Println()
 
-	for y := range board {
+	for i := range board[0] {
 		fmt.Print("|")
-		for x := range board[y] {
-			if board[x][y].GetType() == game.BlackHole && showBombs {
+		for j := range board {
+			if board[j][i].GetType() == game.BlackHole && showBombs {
 				fmt.Print("*")
 			} else {
-				if board[x][y].GetState() == game.Open {
-					fmt.Print(board[x][y].GetAdjBHolesCnt())
+				if board[j][i].GetState() == game.Open {
+					fmt.Print(board[j][i].GetAdjBHolesCnt())
 				} else {
 					fmt.Print("#")
 				}

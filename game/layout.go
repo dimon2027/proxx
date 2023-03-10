@@ -32,12 +32,12 @@ func (l *RandomLayout) GetBoardLayout(w, h, BHCnt int) ([][]uint8, error) {
 	r := rand.New(rand.NewSource(time.Now().Unix()))
 	perms := r.Perm(w * h)
 
-	layout := make([][]uint8, h)
+	layout := make([][]uint8, w)
 
-	for i := 0; i < h; i++ {
-		layout[i] = make([]uint8, w)
-		for j := 0; j < int(w); j++ {
-			if perms[i*w+j] < BHCnt {
+	for i := 0; i < w; i++ {
+		layout[i] = make([]uint8, h)
+		for j := 0; j < h; j++ {
+			if perms[i*h+j] < BHCnt {
 				layout[i][j] = 1
 			} else {
 				layout[i][j] = 0

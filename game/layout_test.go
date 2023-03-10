@@ -16,8 +16,8 @@ func TestRandomLayout(t *testing.T) {
 	layout, err := p.GetBoardLayout(w, h, hnum)
 	assert.NoError(t, err)
 
-	assert.Equal(t, len(layout), h)
-	assert.Equal(t, len(layout[0]), w)
+	assert.Equal(t, len(layout), w)
+	assert.Equal(t, len(layout[0]), h)
 
 	var hnumActual int
 	for i := range layout {
