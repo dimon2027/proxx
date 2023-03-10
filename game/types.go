@@ -11,7 +11,7 @@ type CellType int
 
 const (
 	Normal CellType = iota
-	BHole
+	BlackHole
 )
 
 type GameState int
@@ -22,8 +22,3 @@ const (
 	Won
 	Lost
 )
-
-type Cell struct {
-	state    CellState
-	adjBHCnt uint
-}

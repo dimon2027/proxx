@@ -1,4 +1,4 @@
-package randomlayout
+package game
 
 import (
 	"testing"
@@ -6,13 +6,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBasic(t *testing.T) {
-	p := New()
+func TestRandomLayout(t *testing.T) {
 	w := 100
 	h := 50
 	hnum := 7
 
-	layout, err := p.GetBoardLayout(uint(w), uint(h), uint(hnum))
+	p := NewRandomLayout()
+
+	layout, err := p.GetBoardLayout(w, h, hnum)
 	assert.NoError(t, err)
 
 	assert.Equal(t, len(layout), h)
